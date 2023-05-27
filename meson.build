@@ -11,7 +11,7 @@ project(
 )
 
 deps = []
-deps += dependency('oatpp', version: '1.3.0')
+deps += dependency('oatpp', version: '1.3.0', default_options: ['tests=false'])
 
 
 starter_lib = library(
@@ -51,7 +51,6 @@ if get_option('tests')
             'test/app/MyApiTestClient.hpp',
             'test/app/TestComponent.hpp',
             'test/tests.cpp',
-
         ),
         include_directories: include_directories('test', 'src'),
         link_with: starter_lib,
