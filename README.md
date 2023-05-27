@@ -29,18 +29,13 @@ See more:
 
 ### Build and Run
 
-#### Using CMake
+#### Using Meson
 
-**Requires** 
-
-- `oatpp` module installed. You may run `utility/install-oatpp-modules.sh` 
-script to install required oatpp modules.
 
 ```
-$ mkdir build && cd build
-$ cmake ..
-$ make 
-$ ./my-project-exe  # - run application.
+$ meson setup build
+$ meson compile -C build
+$ ./build/starter  # - run application.
 
 ```
 
