@@ -22,7 +22,7 @@ endif
 if get_option('disable_pool_allocations')
     flags += '-DOATPP_DISABLE_POOL_ALLOCATIONS'
     warning(
-        'WARNING: disable_pool_allocations option is deprecated and has no effect.',
+        'disable_pool_allocations option is deprecated and has no effect.',
     )
 endif
 
@@ -42,7 +42,7 @@ if get_option('thread_distributed_mem_pool_shards_count')
     )
 
     warning(
-        'WARNING: OATPP_THREAD_DISTRIBUTED_MEM_POOL_SHARDS_COUNT option is deprecated and has no effect.',
+        'OATPP_THREAD_DISTRIBUTED_MEM_POOL_SHARDS_COUNT option is deprecated and has no effect.',
     )
 endif
 
@@ -85,6 +85,20 @@ if cpp.get_id() == 'gcc' and cpp.version().version_compare('<5.0.0') == false
     flags += '-DOATPP_DISABLE_STD_PUT_TIME'
 endif
 
+is_msvc_or_similar = cpp.get_id() == 'msvc' or cpp.get_id() == 'clang-cl'
+if is_msvc_or_similar
+    add_project_arguments('/permissive-', language: 'cpp')
+endif
+
+if is_msvc_or_similar
+    if get_option('msvc_link_static_runtime')
+        message('MSVC: using statically-linked runtime (/MT and /MTd).')
+        flags += '/MT'
+    else
+        message('MSVC: using dynamically-linked runtime (/MD and /MDd).')
+        flags += '/MD'
+    endif
+endif
 
 deps = []
 src_files = []
